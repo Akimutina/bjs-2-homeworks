@@ -1,10 +1,21 @@
 "use strict"
 function solveEquation(a, b, c) {
-  let arr = [];
-  
-  return arr;
-}
+	let arr = [];
+	let d = Math.pow(b, 2) - 4 * a * c;
 
-function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  
+	if (d < 0) {
+		return arr;
+	}
+
+	if (d == 0) {
+		arr.push(-b / (2 * a));
+		return arr;
+	}
+
+	if (d > 0) {
+		let x1 = (-b + Math.sqrt(d)) / (2 * a);
+		let x2 = (-b - Math.sqrt(d)) / (2 * a);
+		arr.push(x1, x2);
+		return arr;
+	}
 }
