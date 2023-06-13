@@ -23,6 +23,10 @@ function solveEquation(a, b, c) {
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
 
 	percent = percent / 100 / 12;
+	
+	if (isNaN(percent) || isNaN(contribution) || isNaN(amount) || isNaN(countMonths)) {
+	return false;
+	}
 
 	let loanBody = amount - contribution;
 	let monthlyPayment = loanBody * (percent + (percent / ((Math.pow((1 + percent), countMonths)) - 1)));
@@ -31,9 +35,4 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
 	totalPayment = Number(totalPayment.toFixed(2));
 
 	return totalPayment;
-
-	if (isNaN(percent) || isNaN(contribution) || isNaN(amount) || isNaN(countMonths)) {
-		return false;
-	}
-
 }
