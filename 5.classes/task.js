@@ -96,3 +96,56 @@ class Library {
 		}
 	}
 }
+
+// Задача 3
+
+class Student {
+    constructor(name) {
+        this.name = name;
+        this.marks = {};
+    }
+
+    addMark(mark, subjectName) {
+
+        if ((this.marks.hasOwnProperty(subjectName) === true) && (typeof mark === 'number') && (mark >= 2) && (mark <= 5)) {
+    		this.marks[subjectName].push(mark);
+        }
+
+    	if ((this.marks.hasOwnProperty(subjectName) !== true) && (typeof mark === 'number') && (mark >= 2) && (mark <= 5)) {
+    		this.marks[subjectName] = [];
+    		this.marks[subjectName].push(mark);
+    	} 
+        
+        else {
+    		return this.marks;
+    	}
+    }
+
+    getAverageBySubject(subjectName){
+
+        if (this.marks.hasOwnProperty(subjectName) === true) {
+            let sum = 0;
+            let marks = this.marks[subjectName];
+            marks.forEach((item) => sum += item);
+            let avg = sum / marks.length;
+            return avg;
+        } 
+        return 0;
+        
+
+        // if (this.marks.hasOwnProperty(subjectName === true)) {
+        //     return this.marks[subjectName].reduce((acc, mark) => acc + mark, 0) / this.marks[subjectName].length;
+        // } 
+        // return 0;        
+    }
+
+    getAverage() {
+        let sum = 0;
+        let marks = Object.keys(this.marks);
+        if (marks.length > 0) {
+            marks.forEach(item => sum += this.getAverageBySubject(item));
+            return sum / marks.length;
+        }
+        return 0;
+    }
+}
