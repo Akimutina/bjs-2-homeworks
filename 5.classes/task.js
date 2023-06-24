@@ -133,7 +133,7 @@ class Student {
         return 0;
         
 
-        // if (this.marks.hasOwnProperty(subjectName === true)) {
+        // if (this.marks.hasOwnProperty(subjectName) === true) {
         //     return this.marks[subjectName].reduce((acc, mark) => acc + mark, 0) / this.marks[subjectName].length;
         // } 
         // return 0;        
