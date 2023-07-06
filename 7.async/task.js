@@ -5,25 +5,18 @@ class AlarmClock {
     }
 
     addClock(time, callback) {
-        if ((arguments.length != 2) || (time === null) || (callback === null)) {
+        if (!time || !callback) {
             throw new Error('Отсутствуют обязательные аргументы');
         } 
         if (this.alarmCollection.find(item => item.time === time)) {
-            return console.warn('Уже присутствует звонок на это же время');
+            console.warn('Уже присутствует звонок на это же время');
         }   
         
-        this.alarmCollection.push({
-            callback: callback,
-            time: time,
-            canCall: true
-        });
+        this.alarmCollection.push({callback, time, canCall: true});
     }
 
     removeClock(time) {
-        let timeToDelete = this.alarmCollection.find(item => item.time === time);
-        if (timeToDelete) {
-            this.alarmCollection.splice(timeToDelete, 1);
-        } 
+        this.alarmCollection = this.alarmCollection.filter(item => item.time !== time);
     }
 
     getCurrentFormattedTime() {
@@ -34,26 +27,27 @@ class AlarmClock {
     }
 
     start() {
-    	if (this.intervalId === null) {
-    		this.intervalId = setInterval(() => {
-    			this.alarmCollection.forEach(item => {
-    				if ((item.time === this.getCurrentFormattedTime()) && (item.canCall = true)) {
-    					item.canCall = false;
-    					item.callback();
-    				}
-    			});
-    		}, 1000);
+    	if (this.intervalId !== null) {
+            return;
     	}
-    	return;
+     	this.intervalId = setInterval(() => {
+            const currentTime = this.getCurrentFormattedTime();
+    		this.alarmCollection.forEach(item => {
+    			if (item.time === currentTime && item.canCall) {
+    				item.canCall = false;
+    				item.callback();
+    			}
+    		});
+    	}, 1000);  
     }
 
     stop() {
     	clearInterval(this.intervalId);
-    	return this.intervalId = null;
+    	this.intervalId = null;
     }
     
     resetAllCalls() {
-        return this.alarmCollection.forEach(item => {item.canCall = true});
+        this.alarmCollection.forEach(item => item.canCall = true);
     }
     
     clearAlarms() {
